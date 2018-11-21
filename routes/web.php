@@ -21,6 +21,7 @@ Route::resources([
     'stores' => 'StoreController',
     'customers' => 'CustomerController'
 ]);
+Route::get('stores/{id}','StoreController@show')->name('show');
 Route::get('stores/{id}/newCustomerForm','StoreController@newCustomerForm')->name('addNewCustomerForm');
 Route::get('storeSearchForm','StoreController@storeSearchForm')->name('storeSearchForm');
 Route::get('storeFinder','StoreController@storeFinder')->name('storeFinder');

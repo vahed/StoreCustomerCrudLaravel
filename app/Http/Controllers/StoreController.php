@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
+use Illuminate\Database\QueryException;
 use Validator;
 use Session;
 
@@ -31,9 +32,20 @@ class StoreController extends Controller
      */
     public function index()
     {
-		$stores = DB::table('stores')->paginate(15); //get all the stores
-		
-		return View::make('storeViews.index')->with('stores',$stores);
+		try { 
+			 $stores = DB::table('stores')->paginate(15); //get all the stores
+			 return View::make('storeViews.index')->with('stores',$stores);
+		} catch(QueryException $ex){ 
+		   //dd($ex->getMessage()); 
+			return back()->with('notExists',$ex->getMessage());
+		}
+		/*$stores = DB::table('stores')->paginate(15); //get all the stores
+		if($stores){
+			return View::make('storeViews.index')->with('stores',$stores);
+		}else{
+			return back()->with('Database table does not exists.');
+			return redirect('home')->with('notExists', 'Database table does not exists.');
+		}*/
 		
     }
 
@@ -73,7 +85,7 @@ class StoreController extends Controller
     public function show($storeid)
     {
 	    //get the store by id
-        $storeById = Store::find($storeid);
+        $storeById = Store::where('StoreId', '=', $storeid)->firstOrFail();
 		// show the view and pass the storeById to it
 		return View::make('storeViews.showStoreById')->with('storeById',$storeById); 
     }
@@ -87,7 +99,7 @@ class StoreController extends Controller
     public function edit($id)
     {
         // get the nerd
-        $editFormRecord = Store::find($id);
+        $editFormRecord = Store::where('StoreId', '=', $id)->firstOrFail();
         
         // show the edit form and pass the nerd
         return View::make('storeViews.editForm')->with('editFormRecord', $editFormRecord);
@@ -122,7 +134,7 @@ class StoreController extends Controller
         } else {
             // store
 			
-            $stores = Store::find($id);
+            $stores = Store::where('StoreId', '=', $id)->firstOrFail();
 			$stores->exists = true;
             $stores->StoreId = $request->input('StoreId');
             $stores->Phone  = $request->input('Phone');
@@ -149,8 +161,13 @@ class StoreController extends Controller
 	//display a form to add new customer to store
 	public function newCustomerForm(Request $request, $storeId){
 	    //get the $storeId from request and pass it to the form to add new user
-		$storeId = Store::find($storeId);
-		return View::make('storeViews.newCustomerForm')->with('StoreId',$storeId);
+		
+		try{
+			$storeId = Store::where('StoreId', '=', $storeId)->firstOrFail();
+		    return View::make('storeViews.newCustomerForm')->with('StoreId',$storeId);
+		} catch(QueryException $ex){
+			dd($ex->getMessage());
+		} 
 	}
 	//Add new customer to a store based on StoreId
     public function addNewCustomer(Request $request,$storeId){

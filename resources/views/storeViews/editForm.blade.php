@@ -33,7 +33,7 @@
 					 <form method="POST" action="{{route('updateStore',['id' => $editFormRecord->StoreId])}}" >
 					 {{ csrf_field() }}
 					  <div class="form-group">
-						<input type="hidden" class="form-control" id="Id" name="Id" value="{{ $editFormRecord->Id }}">
+						<input type="hidden" class="form-control" id="Id" name="Id" value="{{ $editFormRecord->StoreId }}">
 					  </div>
 					  <div class="form-group">
 						<label for="storeid">Store ID:</label>

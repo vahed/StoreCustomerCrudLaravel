@@ -8,6 +8,11 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+				    @if (session('notExists'))
+						<div class="alert alert-danger">
+							{{ session('notExists') }}
+						</div>
+					@endif
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}

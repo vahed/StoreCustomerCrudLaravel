@@ -22,6 +22,10 @@
 					<div class="alert alert-info">{{ Session::get('message') }}</div>
 				@endif
 
+				@if (Session::has('notExists'))
+					<div class="alert alert-danger">{{ Session::get('notExists') }}</div>
+				@endif
+
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
@@ -42,7 +46,7 @@
 							<td>
 
 								<!-- show the store (uses the show method found at GET /stores/{id} -->
-								<a class="btn btn-small btn-success" href="{{ URL::to('stores/' . $value->Id) }}">Show this Store</a>
+								<a class="btn btn-small btn-success" href="{{ URL::to('stores/' . $value->StoreId) }}">Show this Store</a>
 
 								<!-- edit this store (uses the edit method found at GET /stores/{id}/edit -->
 								<a class="btn btn-small btn-info" href="{{ URL::to('stores/' . $value->StoreId . '/edit') }}">Edit this Store</a>
