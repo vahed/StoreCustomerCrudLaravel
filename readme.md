@@ -65,11 +65,17 @@ Acceptance criteria
 Run the application
 To run the application you need to create a database called “dataset”. The username for the database is “root” with empty password.
 There are two databases called “customers” with the following columns:
+
 'Id','StoreId','Firstname','Lastname','Phone','Email','updated_at','created_at'
+
 As well as “stores” database table with the following columns:
+
 'StoreId','Phone','Name','Domain','Status','Street','State','updated_at','created_at'
+
 Both tables could be seeded from the following database tables in csv format.
+
 https://github.com/uktech/Recruitment/tree/master/API/dataset
+
 Once, database tables are seeded the application is ready to run.
 Result
 Based on the feedback from the recruiter team, the application successfully passed the main objectives. 
